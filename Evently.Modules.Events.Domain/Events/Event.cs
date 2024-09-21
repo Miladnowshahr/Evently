@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Evently.Modules.Events.Domain.Abstractions;
+using Evently.Common.Domain;
 using Evently.Modules.Events.Domain.Categories;
 
 namespace Evently.Modules.Events.Domain.Events

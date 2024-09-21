@@ -11,6 +11,7 @@
 
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Evently.Common.Application\Evently.Common.Application.csproj" />
     <ProjectReference Include="..\Evently.Modules.Events.Domain\Evently.Modules.Events.Domain.csproj" />
   </ItemGroup>
 

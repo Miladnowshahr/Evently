@@ -1,7 +1,7 @@
-﻿using Evently.Modules.Event.Application.Abstractions.Clock;
-using Evently.Modules.Event.Application.Abstractions.Messaging;
+﻿using Evently.Common.Domain;
+using Evently.Modules.Event.Application.Abstractions.Clock;
+using Evently.Common.Application.Messaging;
 using Evently.Modules.Events.Application.Abstractions.Data;
-using Evently.Modules.Events.Domain.Abstractions;
 using Evently.Modules.Events.Domain.Events;
 
 namespace Evently.Modules.Event.Application.Events.RescheduleEvent;

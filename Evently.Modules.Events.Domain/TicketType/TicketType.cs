@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Evently.Common.Domain;
 using Evently.Modules.Events.Domain.Events;
 
 namespace Evently.Modules.Events.Domain.TicketType;

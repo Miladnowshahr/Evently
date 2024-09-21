@@ -53,17 +53,12 @@ public static class EventsModule
     {
         string databaseConfigurationString = configuration.GetConnectionString("Database");
 
-        NpgsqlDataSource npgsqlDataSource = new NpgsqlDataSourceBuilder(databaseConfigurationString).Build();
-        services.TryAddSingleton(npgsqlDataSource);
-
-
         services.AddDbContext<EventsDbContext>(options =>
              options.UseNpgsql(databaseConfigurationString,
                 npgsqlOption => npgsqlOption.MigrationsHistoryTable(HistoryRepository.DefaultTableName, Schemes.Events))
              .UseSnakeCaseNamingConvention());
 
         services.AddScoped<IUnitofWork>(sp => sp.GetRequiredService<EventsDbContext>());
-
         services.AddScoped<IEventRepository, EventRepository>();
         services.AddScoped<ITicketTypeRepository, TicketTypeRepository>();
         services.AddScoped<ICategoryRepository, CategoryRepository>();
