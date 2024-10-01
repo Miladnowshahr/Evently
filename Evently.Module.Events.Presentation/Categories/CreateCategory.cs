@@ -1,4 +1,5 @@
 ﻿using Evently.Common.Domain;
+using Evently.Common.Presentation.Endpoints;
 using Evently.Modules.Event.Application.Categories.CreateCategory;
 using Evently.Modules.Events.Api;
 using Evently.Modules.Events.Presentation.ApiResults;
@@ -9,9 +10,9 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Evently.Modules.Events.Presentation.Categories;
 
-internal static class CreateCategory
+internal  class CreateCategory:IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public  void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPost("categories", async (Request request, ISender sender) =>
         {

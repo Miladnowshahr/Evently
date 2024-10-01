@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Evently.Common.Domain;
+using Evently.Common.Presentation.Endpoints;
 using Evently.Modules.Event.Application.TicketTypes.UpdateTicketTypePrice;
 using Evently.Modules.Events.Api;
 using Evently.Modules.Events.Presentation.ApiResults;
@@ -14,9 +15,9 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Evently.Modules.Events.Presentation.TicketTypes;
 
-internal static class ChangeTicketTypePrice
+internal  class ChangeTicketTypePrice : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public  void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapPut("ticket-types/{id}/price", async (Guid id, Request request, ISender sender) =>
         {

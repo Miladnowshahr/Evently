@@ -1,4 +1,5 @@
 ﻿using Evently.Common.Domain;
+using Evently.Common.Presentation.Endpoints;
 using Evently.Modules.Event.Application.Events.GetEvents;
 using Evently.Modules.Events.Presentation.ApiResults;
 using MediatR;
@@ -9,9 +10,9 @@ using EventResponse = Evently.Modules.Event.Application.Events.GetEvents.EventRe
 
 namespace Evently.Modules.Events.Api.Events;
 
-internal static class GetEvents
+internal  class GetEvents : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public  void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("events", async (ISender sender) =>
         {

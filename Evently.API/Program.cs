@@ -4,11 +4,14 @@ using Evently.Common.Application;
 using Evently.Common.Infrastructure;
 using Serilog;
 using Evently.API.Middleware;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
+using Evently.Common.Presentation.Endpoints;
 
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Host.UseSerilog((context,loggerConfig) => { loggerConfig.ReadFrom.Configuration(context.Configuration); });
+builder.Host.UseSerilog((context, loggerConfig) => { loggerConfig.ReadFrom.Configuration(context.Configuration); });
 
 builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddProblemDetails();
@@ -16,17 +19,20 @@ builder.Services.AddProblemDetails();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Configuration.AddModuleConfiguration(["events","..."]);
+builder.Configuration.AddModuleConfiguration(["events", "..."]);
+
+string databaseConnectionString = builder.Configuration.GetConnectionString("Database")!;
+string redisConnectionString = builder.Configuration.GetConnectionString("Cache")!;
 
 builder.Services.AddApplication([Evently.Modules.Events.Application.AssemblyReference.Assembly]);
-builder.Services.AddInfrastructure(builder.Configuration.GetConnectionString("Database")!,builder.Configuration.GetConnectionString("Cache")!);
+builder.Services.AddInfrastructure(databaseConnectionString, builder.Configuration.GetConnectionString("Cache")!);
 builder.Services.AddEventsModule(builder.Configuration);
+
+builder.Services.AddHealthChecks().AddNpgSql(databaseConnectionString);
+
 
 var app = builder.Build();
 
-
-
-// Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -36,7 +42,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-EventsModule.MapEndpoints(app);
+app.MapEndpoints();
+
+app.MapHealthChecks("health", new HealthCheckOptions()
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse
+});
 
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler();

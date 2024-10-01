@@ -1,4 +1,5 @@
 ﻿using Evently.Common.Domain;
+using Evently.Common.Presentation.Endpoints;
 using Evently.Modules.Event.Application.TicketTypes.GetTicketType;
 using Evently.Modules.Event.Application.TicketTypes.GetTicketTypes;
 using Evently.Modules.Events.Api;
@@ -10,9 +11,9 @@ using Microsoft.AspNetCore.Routing;
 
 namespace Evently.Modules.Events.Presentation.TicketTypes;
 
-internal static class GetTicketTypes
+internal  class GetTicketTypes : IEndpoint
 {
-    public static void MapEndpoint(IEndpointRouteBuilder app)
+    public  void MapEndpoint(IEndpointRouteBuilder app)
     {
         app.MapGet("ticket-types", async (Guid eventId, ISender sender) =>
         {

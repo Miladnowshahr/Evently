@@ -4,7 +4,7 @@ using System.Linq;
 using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
-using Evently.Module.Events.Presentation.Events;
+using Evently.Common.Presentation.Endpoints;
 using Evently.Modules.Events.Application;
 using Evently.Modules.Events.Application.Abstractions.Data;
 using Evently.Modules.Events.Domain.Categories;
@@ -31,20 +31,13 @@ public static class EventsModule
 {
     public static void MapEndpoints(IEndpointRouteBuilder app)
     {
-        TicketTypeEndpoints.MapEndpoints(app);
-        CategoryEndpoints.MapEndpoints(app);
-        EventEndpoint.MapEndpoints(app);
+        
     }
 
     public static IServiceCollection AddEventsModule(this IServiceCollection services, IConfiguration configuration)
     {
-        services.AddValidatorsFromAssembly(Application.AssemblyReference.Assembly, includeInternalTypes: true);
 
-        services.AddMediatR(config =>
-        {
-            config.RegisterServicesFromAssembly(Application.AssemblyReference.Assembly);
-        });
-
+        services.AddEndpoint(Presentation.AssemblyReference.Assembly);
         services.AddInfrastructure(configuration);
         return services;
 
